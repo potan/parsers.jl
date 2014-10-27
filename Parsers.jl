@@ -19,7 +19,7 @@ module Parsers
  type Gmin <: Grammar
  end
 
- geof(g, s) = if length(s) == 0
+ geof(g::Grammar, s) = if length(s) == 0
                 [((),s)]
               else
                 empty
