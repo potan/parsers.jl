@@ -1,7 +1,7 @@
 
 module Parsers
 
- export getTocken, Grammar, Gmin, geof, cast, lift, -, |, +, mbind, mreturn, mfail, gfilter, starmax
+ export getTocken, Grammar, Gmin, geof, cast, lift, -, |, +, gcut, mbind, mreturn, mfail, gfilter, starmax
  export ArithExpr, toDig, gdigit, gnumber, snumber, amul, asum
  export GArith, GExpr
 
@@ -68,6 +68,12 @@ module Parsers
                                    end
                                   end
  +(g::Grammar, p1, p2, px...) =  +(g::Grammar, +(g::Grammar, p1, p2), px...)
+
+ gcut(g::Grammar,p) = (g,n) -> if(n==0)
+                                   mreturn(g,[])
+                               else
+                                 (-(g,p,gcut(g,p)(g,n-1)))
+                               end
 
  mreturn(g::Grammar, v) = (g,s) -> [(v,s)] 
  mbind(g::Grammar, p, fp) = (g,s) -> reduce((a,v)->[a,fp(g,v[1])(g,v[2])], empty, p(g,s))
