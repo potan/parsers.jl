@@ -5,7 +5,7 @@ module Parsers
  export ArithExpr, toDig, gdigit, gnumber, snumber, amul, asum
  export GArith, GExpr
 
- empty = [1 ""][2:1]
+ empty = []
 
  getTocken(s) = if length(s) == 0
                  empty
